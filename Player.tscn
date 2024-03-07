@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dhq11vm0bs2w3"]
+
+[ext_resource type="Script" path="res://PlayerMovement.gd" id="1_2tw05"]
+[ext_resource type="Texture2D" uid="uid://voyaiewux4o2" path="res://Assets/PNG/Man Blue/manBlue_gun.png" id="1_pdctp"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cwau4"]
+height = 42.0
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_2tw05")
+
+[node name="ManBlueGun" type="Sprite2D" parent="."]
+texture = ExtResource("1_pdctp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-10, 0)
+shape = SubResource("CapsuleShape2D_cwau4")
+debug_color = Color(1, 1, 1, 0.419608)
+
+[node name="Muzzle" type="Marker2D" parent="."]
+position = Vector2(26, 10)
