@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://ddng0f3jrexme"]
+[gd_scene load_steps=5 format=3 uid="uid://ddng0f3jrexme"]
 
 [ext_resource type="Script" path="res://enemymovement.gd" id="1_2pw7k"]
 [ext_resource type="Texture2D" uid="uid://daq5sdbryhh83" path="res://Assets/PNG/Zombie 1/zoimbie1_stand.png" id="1_dgued"]
@@ -7,10 +7,7 @@
 height = 42.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ojq0p"]
-radius = 16.0
-
-[sub_resource type="LabelSettings" id="LabelSettings_q33d2"]
-font_size = 20
+radius = 21.0238
 
 [node name="crashtestzombie" type="CharacterBody2D" groups=["mobs"]]
 script = ExtResource("1_2pw7k")
@@ -33,17 +30,9 @@ autostart = true
 position = Vector2(4, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(-8, 0)
+position = Vector2(-10, 0)
 shape = SubResource("CircleShape2D_ojq0p")
 debug_color = Color(0.862745, 0.294118, 0.533333, 0.419608)
-
-[node name="zombiehealthdebug" type="Label" parent="."]
-offset_left = -45.0
-offset_top = 20.0
-offset_right = -4.0
-offset_bottom = 51.0
-rotation = -1.57079
-label_settings = SubResource("LabelSettings_q33d2")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]

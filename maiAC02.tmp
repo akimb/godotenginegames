@@ -853,13 +853,12 @@ position = Vector2(8, -59)
 shape = SubResource("RectangleShape2D_ickio")
 debug_color = Color(0.952941, 0, 0.54902, 0.419608)
 
-[node name="Player" parent="." node_paths=PackedStringArray("healthui") instance=ExtResource("4_irf2f")]
+[node name="Player" parent="." instance=ExtResource("4_irf2f")]
 position = Vector2(-67, 54)
 script = ExtResource("5_k2u1f")
 speed = 200
 rotation_speed = 5
 health = 10
-healthui = NodePath("../PlayerUI")
 playerdamage = 1
 
 [node name="Sounds" type="Node" parent="."]
@@ -882,4 +881,3 @@ stream = ExtResource("9_85hgg")
 
 [node name="playerhurt" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("10_l7w2d")
-volume_db = -10.0

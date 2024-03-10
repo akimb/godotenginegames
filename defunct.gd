@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-class_name Player
+#class_name Player
 #const laser_sfx = preload("res://blaster-2-81267.mp3")
 @export var speed = 30  # speed in pixels/sec
 @export var rotation_speed = 10
@@ -58,8 +58,8 @@ func dash():
 func _on_hitbox_area_entered(area):
 	health -= 1
 #	health -= enemy.zombiedamsage
-#	var dmg = enemy.get_dmg()
-#	print(dmg)
+	var dmg = enemy.get_dmg()
+	print(dmg)
 	playerhurt.play()
 	
 	if health >= 0:
