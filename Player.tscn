@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3 uid="uid://dhq11vm0bs2w3"]
+
+[ext_resource type="Texture2D" uid="uid://voyaiewux4o2" path="res://Assets/PNG/Man Blue/manBlue_gun.png" id="1_pdctp"]
+[ext_resource type="Script" path="res://PlayerMovement.gd" id="1_w8sp5"]
+[ext_resource type="Texture2D" uid="uid://ciliwejf67ehf" path="res://2d_lights_and_shadows_neutral_point_light.webp" id="3_mwvuc"]
+[ext_resource type="Texture2D" uid="uid://ddjb2u7dn30ba" path="res://flashlighttexture.png" id="4_x636s"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cwau4"]
+height = 42.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j84c5"]
+radius = 21.0238
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+script = ExtResource("1_w8sp5")
+
+[node name="ManBlueGun" type="Sprite2D" parent="." groups=["player"]]
+texture = ExtResource("1_pdctp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player"]]
+position = Vector2(-10, 0)
+shape = SubResource("CapsuleShape2D_cwau4")
+debug_color = Color(1, 1, 1, 0.419608)
+
+[node name="Muzzle" type="Marker2D" parent="."]
+position = Vector2(3, 6)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Hitbox" type="Area2D" parent="." groups=["player"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" groups=["player"]]
+position = Vector2(-10, 0)
+shape = SubResource("CircleShape2D_j84c5")
+debug_color = Color(0.886275, 0.262745, 0.521569, 0.419608)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(-10, 0)
+color = Color(0.784314, 0.776471, 0, 1)
+energy = 0.5
+texture = ExtResource("3_mwvuc")
+
+[node name="PointLight2D2" type="PointLight2D" parent="."]
+visible = false
+position = Vector2(82, -1)
+scale = Vector2(0.183555, 0.183555)
+color = Color(0.784314, 0.776471, 0, 1)
+energy = 0.5
+shadow_enabled = true
+texture = ExtResource("4_x636s")
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
