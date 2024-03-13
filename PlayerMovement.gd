@@ -13,6 +13,8 @@ var Bullet = load("res://Bullet.tscn")
 var score : int = 0
 var angle
 var deathscreen : PackedScene = load("res://deathscreen.tscn")
+var isHealth : bool = false
+var maxHealth = health
 #--------------------------------------------------------------------------------------------------
 @onready var laser = $"../Sounds/lasergun"
 @onready var bite = $"../Sounds/zombiebite"
@@ -76,11 +78,13 @@ func _on_hitbox_area_entered(area):
 			get_tree().root.add_child(deathscreen.instantiate())
 			disable_player()
 			reset_score()
-		
-#func _on_enemy_died():
-##	playerui.set_score(zombieScoreVal)
-#	playerui.set_score(EventBus.score)
-	
+			
+	elif area.is_in_group("health"):
+		if health < maxHealth:
+			health += 1
+			playerui.set_health(health)
+			
+
 func disable_player():
 	set_process(false)
 	set_process_input(false)
@@ -88,5 +92,3 @@ func disable_player():
 	
 func reset_score():
 	EventBus.score = 0
-	
-

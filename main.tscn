@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cqrayhiepx8cs"]
+[gd_scene load_steps=20 format=3 uid="uid://cqrayhiepx8cs"]
 
 [ext_resource type="Texture2D" uid="uid://cj60edgt5sspn" path="res://Assets/Spritesheet/spritesheet_tiles.png" id="1_jtx1c"]
 [ext_resource type="Script" path="res://world.gd" id="1_sb1kq"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://gjp1oudalem8" path="res://player_ui.tscn" id="2_i1u1c"]
 [ext_resource type="PackedScene" uid="uid://crund6ja7pl2j" path="res://differentscorevalzombie.tscn" id="3_c8ht1"]
 [ext_resource type="PackedScene" uid="uid://dhq11vm0bs2w3" path="res://Player.tscn" id="4_irf2f"]
+[ext_resource type="PackedScene" uid="uid://cchcqo7gwrncw" path="res://healthenemy.tscn" id="4_xj3x8"]
 [ext_resource type="AudioStream" uid="uid://v823p0qrtk5c" path="res://Sounds/blaster-2-81267.mp3" id="5_cif3r"]
 [ext_resource type="AudioStream" uid="uid://b8s1dhi62a0yq" path="res://Sounds/zombiebite.mp3" id="6_u0auh"]
 [ext_resource type="AudioStream" uid="uid://bkkwjy2857dd6" path="res://Sounds/zombiehurt.mp3" id="7_jovrq"]
@@ -14,6 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://b5uyqyw7dqukb" path="res://Sounds/playerhurt.mp3" id="10_l7w2d"]
 [ext_resource type="AudioStream" uid="uid://box50yq8f6djx" path="res://Sounds/parasitevgm(looped).mp3" id="12_o47j3"]
 [ext_resource type="PackedScene" uid="uid://c624dnpv6poco" path="res://testinteractable.tscn" id="14_lyvg1"]
+[ext_resource type="AudioStream" uid="uid://ckjrsmjawcjw3" path="res://Sounds/healthpickup.mp3" id="15_iaoeh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i1t72"]
 texture = ExtResource("1_jtx1c")
@@ -809,7 +811,7 @@ size = Vector2(64, 138)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_sb1kq")
-enemy_scenes = Array[PackedScene]([ExtResource("2_ap8bx"), ExtResource("3_c8ht1")])
+enemy_scenes = Array[PackedScene]([ExtResource("2_ap8bx"), ExtResource("3_c8ht1"), ExtResource("4_xj3x8")])
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(4, -1)
@@ -843,6 +845,7 @@ layer_3/tile_data = PackedInt32Array()
 
 [node name="Player" parent="." node_paths=PackedStringArray("playerui") instance=ExtResource("4_irf2f")]
 position = Vector2(-11, -1)
+speed = 300
 playerui = NodePath("../PlayerUI")
 
 [node name="walltest" type="RigidBody2D" parent="."]
@@ -882,8 +885,12 @@ volume_db = -10.0
 stream = ExtResource("12_o47j3")
 volume_db = -5.0
 
+[node name="healthpickup" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("15_iaoeh")
+
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.411765, 0.286275, 0.372549, 1)
+position = Vector2(-1, 0)
+color = Color(0.572549, 0.572549, 0.572549, 1)
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
