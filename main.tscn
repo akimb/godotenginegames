@@ -11,9 +11,9 @@
 [ext_resource type="PackedScene" uid="uid://bp78m01h14rog" path="res://tile_map.tscn" id="5_nyj8n"]
 [ext_resource type="AudioStream" uid="uid://b8s1dhi62a0yq" path="res://Sounds/zombiebite.mp3" id="6_u0auh"]
 [ext_resource type="AudioStream" uid="uid://bkkwjy2857dd6" path="res://Sounds/zombiehurt.mp3" id="7_jovrq"]
-[ext_resource type="AudioStream" uid="uid://cbq4q634ugnuc" path="res://Sounds/playerdeath.mp3" id="8_8kyr7"]
 [ext_resource type="AudioStream" uid="uid://blmdfs5ubihi0" path="res://Sounds/zombiedeath.mp3" id="9_85hgg"]
 [ext_resource type="AudioStream" uid="uid://b5uyqyw7dqukb" path="res://Sounds/playerhurt.mp3" id="10_l7w2d"]
+[ext_resource type="AudioStream" uid="uid://bvaqh0jm8ua0f" path="res://Sounds/playerdeath_test.mp3" id="12_gy7q6"]
 [ext_resource type="AudioStream" uid="uid://dyv41uj2hsfhn" path="res://Sounds/Parasite(Loop).mp3" id="14_tmtm7"]
 [ext_resource type="AudioStream" uid="uid://ckjrsmjawcjw3" path="res://Sounds/healthpickup.mp3" id="15_iaoeh"]
 [ext_resource type="AudioStream" uid="uid://db0x6tiddtet" path="res://Sounds/Parasite(Build).mp3" id="17_qyu8l"]
@@ -49,8 +49,8 @@ stream = ExtResource("7_jovrq")
 volume_db = -10.262
 
 [node name="playerdeath" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("8_8kyr7")
-volume_db = -15.665
+stream = ExtResource("12_gy7q6")
+volume_db = -3.915
 
 [node name="zombiedeath" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("9_85hgg")
@@ -75,11 +75,11 @@ autoplay = true
 
 [node name="rapidfirepowerup" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("18_ejwqx")
-volume_db = -28.719
+volume_db = 3.482
 
 [node name="weaponsdisabled" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("19_qaip4")
-volume_db = -25.239
+volume_db = -5.658
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 position = Vector2(-1, 0)
