@@ -1,0 +1,94 @@
+[gd_scene load_steps=10 format=3 uid="uid://crund6ja7pl2j"]
+
+[ext_resource type="Script" path="res://enemymovement.gd" id="1_bixad"]
+[ext_resource type="Texture2D" uid="uid://dax7vhql0m8vd" path="res://Parasyte enemy (yellow).png" id="2_1kkfq"]
+[ext_resource type="Texture2D" uid="uid://ciliwejf67ehf" path="res://2d_lights_and_shadows_neutral_point_light.webp" id="3_kpaph"]
+[ext_resource type="Script" path="res://HealthBar.gd" id="4_c7wol"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1vubs"]
+height = 26.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ojq0p"]
+radius = 14.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_2nu84"]
+font_size = 20
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wdbd7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l6ril"]
+bg_color = Color(0.898039, 0, 0.0980392, 1)
+
+[node name="differentscorevalzombie" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_bixad")
+speed = 200
+health = 10
+zombieScoreVal = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-3, 0)
+texture = ExtResource("2_1kkfq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-5, -1)
+shape = SubResource("CapsuleShape2D_1vubs")
+debug_color = Color(1, 1, 1, 0.419608)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="Hitbox" type="Area2D" parent="." groups=["hard"]]
+position = Vector2(4, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(-9, -1)
+shape = SubResource("CircleShape2D_ojq0p")
+debug_color = Color(0.862745, 0.294118, 0.533333, 0.419608)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(-2, -4)
+scale = Vector2(0.02, 0.02)
+color = Color(0.25098, 0.643137, 0, 1)
+energy = 5.0
+texture = ExtResource("3_kpaph")
+
+[node name="PointLight2D2" type="PointLight2D" parent="."]
+position = Vector2(-9, -4)
+scale = Vector2(0.02, 0.02)
+color = Color(0.25098, 0.643137, 0, 1)
+energy = 5.0
+texture = ExtResource("3_kpaph")
+
+[node name="zombiehealthdebug" type="Label" parent="."]
+offset_left = -21.0
+offset_top = -47.0
+offset_right = 21.0
+offset_bottom = -16.0
+label_settings = SubResource("LabelSettings_2nu84")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -18.0
+offset_top = -19.0
+offset_right = -14.0
+offset_bottom = 8.0
+scale = Vector2(8.8496, 0.102042)
+theme_override_styles/background = SubResource("StyleBoxEmpty_wdbd7")
+theme_override_styles/fill = SubResource("StyleBoxFlat_l6ril")
+max_value = 5.0
+step = 1.0
+show_percentage = false
+script = ExtResource("4_c7wol")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="NavTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered" flags=18]
+[connection signal="timeout" from="NavTimer" to="." method="_on_nav_timer_timeout"]

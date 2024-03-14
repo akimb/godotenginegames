@@ -4,7 +4,11 @@ extends Node
 #--------------------------------------------------------------------------------------------------
 signal enemy_died(enemy)
 signal isHealthEnemy(enemy)
+signal rapidfirestarts
+signal rapidfireends
+
 var score : int = 0
+var playerDamage : int = 1
 
 func _ready():
 	print("loaded eventbus")
