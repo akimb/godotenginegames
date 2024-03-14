@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://c624dnpv6poco"]
+
+[ext_resource type="Script" path="res://testinteractable.gd" id="1_8k234"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i0dow"]
+radius = 77.0584
+
+[node name="Interactable Test" type="Area2D"]
+script = ExtResource("1_8k234")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_i0dow")
+debug_color = Color(1, 1, 1, 0.419608)
+
+[node name="Interact" type="Label" parent="."]
+offset_left = -11.0
+offset_top = -33.0
+offset_right = 29.0
+offset_bottom = -7.0
+text = "[E]"
+
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

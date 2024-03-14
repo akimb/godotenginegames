@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://gjp1oudalem8"]
+[gd_scene load_steps=5 format=3 uid="uid://gjp1oudalem8"]
 
 [ext_resource type="Script" path="res://player_ui.gd" id="1_x75qi"]
 
@@ -8,6 +8,15 @@ outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 8
 shadow_color = Color(0.560784, 0.298039, 0.133333, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_dne1v"]
+font_size = 30
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_7ks2g"]
+font_size = 10
 
 [node name="PlayerUI" type="CanvasLayer"]
 script = ExtResource("1_x75qi")
@@ -30,3 +39,16 @@ layout_mode = 2
 size_flags_vertical = 0
 text = "Health :"
 label_settings = SubResource("LabelSettings_1exn5")
+
+[node name="EnemyScore" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Score : 0"
+label_settings = SubResource("LabelSettings_dne1v")
+horizontal_alignment = 2
+
+[node name="Game Version" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Godot Game Jam Game Alpha v3"
+label_settings = SubResource("LabelSettings_7ks2g")

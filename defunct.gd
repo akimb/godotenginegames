@@ -5,8 +5,8 @@ extends CharacterBody2D
 @export var speed = 30  # speed in pixels/sec
 @export var rotation_speed = 10
 @export var health : int = 10
-@export var healthui : HealthUI
-@export var playerdamage : int = 1
+@export var health_ui : PlayerUI
+@export var player_damage : int = 1
 #@export var zombie : Enemy
 #@export var health_score : Label
 var Bullet = load("res://Bullet.tscn") 
@@ -21,7 +21,7 @@ var enemy : Enemy
 var angle
 
 func _ready():
-	healthui.set_health(health)
+	health_ui.set_health(health)
 
 func _input(event):
 	angle = (get_global_mouse_position() - global_position).angle()
@@ -63,7 +63,7 @@ func _on_hitbox_area_entered(area):
 	playerhurt.play()
 	
 	if health >= 0:
-		healthui.set_health(health)
+		health_ui.set_health(health)
 
 	if health == 0:
 		playerdeath.play()
