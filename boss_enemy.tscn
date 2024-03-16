@@ -1,0 +1,124 @@
+[gd_scene load_steps=13 format=3 uid="uid://cnv8rb7dxpcqh"]
+
+[ext_resource type="Script" path="res://enemymovement.gd" id="1_gdytu"]
+[ext_resource type="Texture2D" uid="uid://dcgxs25f5pu37" path="res://Parasyte enemy (White).png" id="2_bci1e"]
+[ext_resource type="Texture2D" uid="uid://br0pv1u4ivd2e" path="res://googly eyes.png" id="3_4hv7v"]
+[ext_resource type="Texture2D" uid="uid://ciliwejf67ehf" path="res://2d_lights_and_shadows_neutral_point_light.webp" id="4_7sqle"]
+[ext_resource type="Script" path="res://HealthBar.gd" id="5_jgvos"]
+[ext_resource type="Texture2D" uid="uid://bdloeimjsr2eq" path="res://bossparticle.png" id="5_mklox"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1vubs"]
+radius = 19.0
+height = 52.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ojq0p"]
+radius = 28.1603
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rknca"]
+emission_shape = 3
+emission_box_extents = Vector3(7, 3, 1)
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+gravity = Vector3(0, 0, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_uagmi"]
+font_size = 20
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g20ul"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8sapr"]
+bg_color = Color(0.898039, 0, 0.0980392, 1)
+
+[node name="boss" type="CharacterBody2D"]
+collision_layer = 7
+collision_mask = 3
+script = ExtResource("1_gdytu")
+speed = 150
+health = 100
+zombie_damage = 5
+
+[node name="Enemy Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -18)
+scale = Vector2(2, 2)
+texture = ExtResource("2_bci1e")
+
+[node name="GooglyEyes" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-2, 0)
+texture = ExtResource("3_4hv7v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3, -1)
+shape = SubResource("CapsuleShape2D_1vubs")
+debug_color = Color(1, 1, 1, 0.419608)
+
+[node name="CanAttack" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="Hitbox" type="Area2D" parent="." groups=["basic"]]
+position = Vector2(4, 0)
+collision_layer = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(-7, -1)
+shape = SubResource("CircleShape2D_ojq0p")
+debug_color = Color(0.862745, 0.294118, 0.533333, 0.419608)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(2, -8)
+scale = Vector2(0.05, 0.05)
+color = Color(0.921569, 0.698039, 0.0705882, 1)
+energy = 5.0
+texture = ExtResource("4_7sqle")
+
+[node name="PointLight2D2" type="PointLight2D" parent="."]
+position = Vector2(-12, -8)
+scale = Vector2(0.05, 0.05)
+color = Color(0.921569, 0.698039, 0.0705882, 1)
+energy = 5.0
+texture = ExtResource("4_7sqle")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="PointLight2D2"]
+position = Vector2(180, -400)
+scale = Vector2(50, 50)
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_rknca")
+texture = ExtResource("5_mklox")
+
+[node name="PointLight2D3" type="PointLight2D" parent="."]
+color = Color(1, 1, 0.803922, 1)
+energy = 0.5
+shadow_enabled = true
+texture = ExtResource("4_7sqle")
+
+[node name="zombiehealthdebug" type="Label" parent="."]
+offset_left = -62.0
+offset_top = -47.0
+offset_right = -20.0
+offset_bottom = -16.0
+label_settings = SubResource("LabelSettings_uagmi")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -34.0
+offset_top = -33.0
+offset_right = -27.0
+offset_bottom = -6.0
+scale = Vector2(8.8496, 0.102042)
+theme_override_styles/background = SubResource("StyleBoxEmpty_g20ul")
+theme_override_styles/fill = SubResource("StyleBoxFlat_8sapr")
+show_percentage = false
+script = ExtResource("5_jgvos")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="NavTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered" flags=18]
+[connection signal="timeout" from="NavTimer" to="." method="_on_nav_timer_timeout" flags=18]

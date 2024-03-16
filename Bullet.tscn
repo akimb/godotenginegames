@@ -21,12 +21,14 @@ orbit_velocity_min = 0.0
 orbit_velocity_max = 0.0
 
 [node name="Bullet" type="Area2D" groups=["bullet"]]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_kan73")
 
 [node name="BulletDeathTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Bullet Sprite" type="Sprite2D" parent="."]
 rotation = 1.5708
 texture = ExtResource("2_vbnx2")
 
@@ -35,7 +37,7 @@ position = Vector2(12, 0)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_ot1yd")
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="Bullet Light" type="PointLight2D" parent="."]
 position = Vector2(12, 1.19209e-07)
 rotation = 3.14159
 scale = Vector2(0.239998, 0.239998)
@@ -43,7 +45,7 @@ color = Color(0.886275, 0, 0.529412, 1)
 energy = 6.0
 texture = ExtResource("3_rw7yu")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="Bullet Particles" type="GPUParticles2D" parent="."]
 position = Vector2(27, 0)
 amount = 32
 process_material = SubResource("ParticleProcessMaterial_tgvof")

@@ -5,34 +5,45 @@ class_name Bullet
 @export var speed = 1000
 #--------------------------------------------------------------------------------------------------
 @onready var bulletDeathTimer = $BulletDeathTimer
-@onready var bulletSprite = $Sprite2D
+@onready var bulletSprite = $"Bullet Sprite"
+@onready var bulletLight = $"Bullet Light"
+@onready var bulletParticles = $"Bullet Particles"
 #--------------------------------------------------------------------------------------------------
 
 func _ready():
 	bulletDeathTimer.start()
-#	EventBus.rapidfirestarts.connect(changeColortoBlue)
-#	EventBus.rapidfireends.connect(changeColorBack)
+	EventBus.rapidfire.connect(rapidFireBullet)
+	EventBus.doubledamage.connect(doubleDamageBullet)
 	
 func _physics_process(delta):
 	position += transform.x * speed * delta
-#	EventBus.rapidfirestarts.connect(changeColortoBlue)
-#	EventBus.rapidfireends.connect(changeColorBack)
-#	bar = EventBus.isRapidFire.connect(changeColor)
 
 func _on_bullet_death_timer_timeout():
 	queue_free()
 
-func _on_area_entered(area):
+func _on_area_entered(_area):
 	queue_free()
 
-func _on_body_entered(body):
+func _on_body_entered(_body):
 	queue_free()
 
-func changeColortoBlue():
-	bulletSprite.modulate = Color(0,0,1)
+func rapidFireBullet(switch):
+	if switch:
+		bulletSprite.modulate = Color.AQUA
+		bulletLight.color = Color.AQUA
+		bulletParticles.modulate = Color.AQUA
+	else:
+		bulletSprite.modulate = Color.WHITE
+		bulletLight.color = Color(0.89,0,0.53,1)
+		bulletParticles.modulate = Color.WHITE
 
-func changeColorBack():
-	bulletSprite.modulate = Color(0,0,0)
-
-
+func doubleDamageBullet(switch):
+	if switch:
+		bulletSprite.modulate = Color.ORANGE
+		bulletLight.color = Color.ORANGE
+		bulletParticles.modulate = Color.ORANGE
+	else:
+		bulletSprite.modulate = Color.WHITE
+		bulletLight.color = Color(0.89,0,0.53,1)
+		bulletParticles.modulate = Color.WHITE
 

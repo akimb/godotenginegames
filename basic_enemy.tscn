@@ -1,15 +1,17 @@
-[gd_scene load_steps=10 format=3 uid="uid://ddng0f3jrexme"]
+[gd_scene load_steps=11 format=3 uid="uid://ddng0f3jrexme"]
 
 [ext_resource type="Script" path="res://enemymovement.gd" id="1_2pw7k"]
 [ext_resource type="Texture2D" uid="uid://cpqhx38nkgci4" path="res://Parasyte enemy (Black).png" id="2_ewehh"]
+[ext_resource type="Texture2D" uid="uid://br0pv1u4ivd2e" path="res://googly eyes.png" id="3_6agua"]
 [ext_resource type="Texture2D" uid="uid://ciliwejf67ehf" path="res://2d_lights_and_shadows_neutral_point_light.webp" id="3_xgh6f"]
 [ext_resource type="Script" path="res://HealthBar.gd" id="4_j6gwe"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1vubs"]
-height = 26.0
+radius = 19.0
+height = 52.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ojq0p"]
-radius = 14.0
+radius = 28.1603
 
 [sub_resource type="LabelSettings" id="LabelSettings_uagmi"]
 font_size = 20
@@ -20,24 +22,30 @@ font_size = 20
 bg_color = Color(0.898039, 0, 0.0980392, 1)
 
 [node name="basic" type="CharacterBody2D"]
-collision_layer = 2
+collision_layer = 7
 collision_mask = 3
 script = ExtResource("1_2pw7k")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Enemy Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_ewehh")
+
+[node name="GooglyEyes" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-2, 0)
+texture = ExtResource("3_6agua")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2, -1)
 shape = SubResource("CapsuleShape2D_1vubs")
 debug_color = Color(1, 1, 1, 0.419608)
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 2.0
+[node name="CanAttack" type="Timer" parent="."]
+wait_time = 0.5
 autostart = true
 
 [node name="Hitbox" type="Area2D" parent="." groups=["basic"]]
 position = Vector2(4, 0)
+collision_layer = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(-6, -1)
@@ -59,10 +67,10 @@ energy = 5.0
 texture = ExtResource("3_xgh6f")
 
 [node name="zombiehealthdebug" type="Label" parent="."]
-offset_left = -21.0
-offset_top = -47.0
-offset_right = 21.0
-offset_bottom = -16.0
+offset_left = -54.0
+offset_top = -35.0
+offset_right = -12.0
+offset_bottom = -4.0
 label_settings = SubResource("LabelSettings_uagmi")
 horizontal_alignment = 1
 vertical_alignment = 1

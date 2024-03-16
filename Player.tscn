@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dhq11vm0bs2w3"]
+[gd_scene load_steps=8 format=3 uid="uid://dhq11vm0bs2w3"]
 
 [ext_resource type="Script" path="res://PlayerMovement.gd" id="1_w8sp5"]
 [ext_resource type="Texture2D" uid="uid://dtqfeav05abee" path="res://Assets/MC_gun.png" id="2_akamj"]
+[ext_resource type="Texture2D" uid="uid://br0pv1u4ivd2e" path="res://googly eyes.png" id="3_era2y"]
 [ext_resource type="Texture2D" uid="uid://ciliwejf67ehf" path="res://2d_lights_and_shadows_neutral_point_light.webp" id="3_mwvuc"]
-[ext_resource type="Texture2D" uid="uid://ddjb2u7dn30ba" path="res://flashlighttexture.png" id="4_x636s"]
+[ext_resource type="PackedScene" uid="uid://gjp1oudalem8" path="res://player_ui.tscn" id="3_v4pma"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cwau4"]
 height = 42.0
@@ -17,10 +18,18 @@ collision_mask = 3
 script = ExtResource("1_w8sp5")
 cooldownTimer = NodePath("FireDelayTimer")
 
-[node name="ManBlueGun" type="Sprite2D" parent="."]
+[node name="Character Sprite" type="Sprite2D" parent="."]
 position = Vector2(-7, -2)
 scale = Vector2(2, 2)
 texture = ExtResource("2_akamj")
+
+[node name="PlayerUI" parent="." instance=ExtResource("3_v4pma")]
+
+[node name="GooglyEyes" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(3, -2)
+rotation = -1.57079
+texture = ExtResource("3_era2y")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-10, 0)
@@ -41,18 +50,8 @@ debug_color = Color(0.886275, 0.262745, 0.521569, 0.419608)
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(-10, 0)
-color = Color(0.784314, 0.776471, 0, 1)
-energy = 0.5
-texture = ExtResource("3_mwvuc")
-
-[node name="PointLight2D2" type="PointLight2D" parent="."]
-visible = false
-position = Vector2(82, -1)
-scale = Vector2(0.183555, 0.183555)
-color = Color(0.784314, 0.776471, 0, 1)
-energy = 0.5
 shadow_enabled = true
-texture = ExtResource("4_x636s")
+texture = ExtResource("3_mwvuc")
 
 [node name="FireDelayTimer" type="Timer" parent="."]
 one_shot = true
@@ -63,6 +62,14 @@ one_shot = true
 [node name="DisableTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="DarkenTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="DoubleDamageTimer" type="Timer" parent="."]
+
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="timeout" from="RapidFireTimer" to="." method="_on_rapid_fire_timer_timeout"]
 [connection signal="timeout" from="DisableTimer" to="." method="_on_disable_timer_timeout"]
+[connection signal="timeout" from="DarkenTimer" to="." method="_on_darken_timer_timeout"]
+[connection signal="timeout" from="DoubleDamageTimer" to="." method="_on_double_damage_timer_timeout"]

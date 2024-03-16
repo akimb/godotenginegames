@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://gjp1oudalem8"]
+[gd_scene load_steps=7 format=3 uid="uid://gjp1oudalem8"]
 
 [ext_resource type="Script" path="res://player_ui.gd" id="1_x75qi"]
 
@@ -17,6 +17,17 @@ shadow_size = 8
 
 [sub_resource type="LabelSettings" id="LabelSettings_7ks2g"]
 font_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_6v0a3"]
+font_size = 40
+outline_size = 5
+outline_color = Color(0.968627, 0, 0.105882, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_0ppwf"]
+font_size = 50
+font_color = Color(0.976471, 0, 0.235294, 1)
+outline_size = 5
+outline_color = Color(0.721569, 0.262745, 0.0235294, 1)
 
 [node name="PlayerUI" type="CanvasLayer"]
 script = ExtResource("1_x75qi")
@@ -50,5 +61,31 @@ horizontal_alignment = 2
 [node name="Game Version" type="Label" parent="MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 8
-text = "Godot Game Jam Game Alpha v3"
+text = "Parasyte Survivors Beta v2"
 label_settings = SubResource("LabelSettings_7ks2g")
+
+[node name="LevelUp" type="Label" parent="MarginContainer"]
+visible = false
+layout_mode = 2
+text = "Next Wave
+Enemies Increasing"
+label_settings = SubResource("LabelSettings_6v0a3")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Boss" type="Label" parent="MarginContainer"]
+visible = false
+layout_mode = 2
+text = "!!! BOSS INCOMING !!!"
+label_settings = SubResource("LabelSettings_0ppwf")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelUpTimerUI" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="BossWarningTimerUI" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="timeout" from="LevelUpTimerUI" to="." method="_on_level_up_timer_ui_timeout"]
+[connection signal="timeout" from="BossWarningTimerUI" to="." method="_on_boss_warning_timer_ui_timeout"]

@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://cchcqo7gwrncw"]
+[gd_scene load_steps=13 format=3 uid="uid://cchcqo7gwrncw"]
 
 [ext_resource type="Script" path="res://enemymovement.gd" id="1_2e75p"]
 [ext_resource type="Texture2D" uid="uid://mx3r6bip4phs" path="res://Parasyte enemy (Red).png" id="2_2a1fj"]
 [ext_resource type="Texture2D" uid="uid://ciliwejf67ehf" path="res://2d_lights_and_shadows_neutral_point_light.webp" id="3_ae8tr"]
-[ext_resource type="Texture2D" uid="uid://cfynsl6ur5r48" path="res://laserparticle.png" id="4_mud1k"]
+[ext_resource type="Texture2D" uid="uid://br0pv1u4ivd2e" path="res://googly eyes.png" id="3_ur5cw"]
 [ext_resource type="Script" path="res://HealthBar.gd" id="5_840v4"]
+[ext_resource type="Texture2D" uid="uid://bevyphohj4g5b" path="res://healthparticle.png" id="5_bbwf5"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j2fnq"]
 height = 26.0
@@ -14,7 +15,7 @@ radius = 18.0
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_54jur"]
 emission_shape = 1
-emission_sphere_radius = 20.0
+emission_sphere_radius = 40.0
 particle_flag_disable_z = true
 gravity = Vector3(0, 0, 0)
 orbit_velocity_min = 0.0
@@ -28,8 +29,8 @@ font_size = 20
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xfn2r"]
 bg_color = Color(0.898039, 0, 0.0980392, 1)
 
-[node name="healthenemy" type="CharacterBody2D"]
-collision_layer = 2
+[node name="health" type="CharacterBody2D"]
+collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_2e75p")
 speed = 75
@@ -38,9 +39,13 @@ zombie_damage = 0
 zombieScoreVal = 3
 isHealthEnemy = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Enemy Sprite" type="Sprite2D" parent="."]
 position = Vector2(2, 0)
 texture = ExtResource("2_2a1fj")
+
+[node name="GooglyEyes" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("3_ur5cw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_j2fnq")
@@ -59,12 +64,12 @@ energy = 5.0
 texture = ExtResource("3_ae8tr")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="PointLight2D"]
-modulate = Color(1, 0.45098, 0.45098, 1)
-position = Vector2(-50, 200)
 scale = Vector2(50, 50)
 amount = 2
 process_material = SubResource("ParticleProcessMaterial_54jur")
-texture = ExtResource("4_mud1k")
+texture = ExtResource("5_bbwf5")
+lifetime = 5.0
+speed_scale = 25.0
 
 [node name="PointLight2D2" type="PointLight2D" parent="."]
 position = Vector2(-4, -4)
@@ -74,15 +79,14 @@ energy = 5.0
 texture = ExtResource("3_ae8tr")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="PointLight2D2"]
-modulate = Color(1, 0.45098, 0.45098, 1)
-position = Vector2(-50, 200)
 scale = Vector2(50, 50)
 amount = 2
 process_material = SubResource("ParticleProcessMaterial_54jur")
-texture = ExtResource("4_mud1k")
+texture = ExtResource("5_bbwf5")
+lifetime = 5.0
+speed_scale = 25.0
 
 [node name="zombiehealthdebug" type="Label" parent="."]
-visible = false
 offset_left = -21.0
 offset_top = -47.0
 offset_right = 21.0
