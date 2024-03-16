@@ -42,11 +42,11 @@ max_polyphony = 10
 
 [node name="zombiebite" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("6_u0auh")
-volume_db = -6.962
+volume_db = 1.851
 
 [node name="zombiehurt" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("7_jovrq")
-volume_db = -10.262
+volume_db = -1.124
 
 [node name="playerdeath" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("12_gy7q6")
@@ -75,7 +75,7 @@ autoplay = true
 
 [node name="rapidfirepowerup" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("18_ejwqx")
-volume_db = 3.482
+volume_db = 1.741
 
 [node name="weaponsdisabled" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("19_qaip4")
