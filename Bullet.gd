@@ -8,12 +8,14 @@ class_name Bullet
 @onready var bulletSprite = $"Bullet Sprite"
 @onready var bulletLight = $"Bullet Light"
 @onready var bulletParticles = $"Bullet Particles"
+#@onready var laser = $"../Sounds/lasergun"
 #--------------------------------------------------------------------------------------------------
 
 func _ready():
 	bulletDeathTimer.start()
 	EventBus.rapidfire.connect(rapidFireBullet)
 	EventBus.doubledamage.connect(doubleDamageBullet)
+#	laser.play()
 	
 func _physics_process(delta):
 	position += transform.x * speed * delta

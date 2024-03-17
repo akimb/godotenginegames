@@ -39,6 +39,7 @@ zombieScoreVal = 4
 isDebuffEnemy = true
 
 [node name="Enemy Sprite" type="Sprite2D" parent="."]
+modulate = Color(0.392157, 1, 0.392157, 1)
 position = Vector2(2, 0)
 texture = ExtResource("2_xnimt")
 

@@ -59,6 +59,7 @@ label_settings = SubResource("LabelSettings_dne1v")
 horizontal_alignment = 2
 
 [node name="Game Version" type="Label" parent="MarginContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 8
 text = "Parasyte Survivors Beta v2"

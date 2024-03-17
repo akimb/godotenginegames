@@ -9,7 +9,9 @@ class_name Enemy
 @export var zombieScoreVal = 1
 @export var isHealthEnemy : bool = false
 @export var isDebuffEnemy : bool = false
-@export var isBuffEnemy: bool = false
+@export var isBuffEnemy : bool = false
+@export var isBoss : bool = false
+@export var knockback_strength := 5.0
 #@export var healthbar : HealthBar
 #@export var enemyui = ProgressBar
 #@export var playerui : PlayerUI
@@ -24,9 +26,10 @@ class_name Enemy
 @onready var healthbar = $HealthBar
 @onready var googlyEyes = $GooglyEyes
 @onready var enemysprite = $"Enemy Sprite"
+@onready var bossbullet : PackedScene =  load("res://Boss Bullet.tscn")
 #--------------------------------------------------------------------------------------------------
 #var angle
-#var can_contact : bool = false
+var knockback = Vector2.ZERO
 var playerDamage := 0
 #--------------------------------------------------------------------------------------------------
 
@@ -37,29 +40,40 @@ func _ready():
 	EventBus.goofymode.connect(goofyEnabled)
 	EventBus.playerDamage.connect(damageValue)
 	
-#func _process(delta):
-#	EventBus.goofymode.connect(goofyEnabled)
+func _process(_delta):
+#	if isBoss:
+#		bossShoot()
+#	print(player.position)
+	pass
 	
 func _physics_process(delta):
-	
 	velocity = Vector2.ZERO
-	velocity = (player.position - position).normalized() * speed
 
 	if isHealthEnemy or isBuffEnemy:
 		velocity = -position.direction_to(player.position) * speed
 #		rotation = velocity.angle()
 	else:
-		velocity = position.direction_to(player.position) * speed
+		velocity = (position.direction_to(player.position) - knockback) * speed 
 #		rotation = -velocity.angle()
 
 	move_and_collide(velocity * delta)
+	knockback = lerp(knockback, Vector2.ZERO, 0.1)
 #	var dir = to_local(nav_agent.get_next_path_position()).normalized()
 #	if isHealthEnemy:
 #		dir = -dir
 #	velocity = dir * speed
 #	move_and_slide()
-	
 
+func bossShoot():
+	EventBus.playerPosition.emit(player.position)
+	var b = bossbullet.instantiate()
+	get_tree().root.add_child(b)
+	b.transform = $Muzzle.global_transform
+
+func _on_boss_bullet_shoot_timeout():
+#	if isBoss:
+#		bossShoot()
+	pass
 #func makepath() -> void:
 #	nav_agent.target_position = player.global_position
 func _on_nav_timer_timeout():
@@ -82,6 +96,9 @@ func _on_hitbox_area_entered(area):
 	if area.is_in_group("player") and not isHealthEnemy:
 		EventBus.enemyAttack.emit(self.zombie_damage)
 		zombiebite.play()
+		var direction = global_position.direction_to(area.global_position)
+		var explosion_force = direction * knockback_strength
+		knockback = explosion_force
 
 	if area.is_in_group("player") and isHealthEnemy:
 		healthpickup.play()
@@ -89,7 +106,8 @@ func _on_hitbox_area_entered(area):
 	
 	if area.is_in_group("player") and (isDebuffEnemy or isBuffEnemy):
 		queue_free()
-		
+	
+	
 func goofyEnabled(isGoofy):
 	if isGoofy:
 		googlyEyes.show()
@@ -110,3 +128,19 @@ func sprite_flash() -> void:
 
 #func _on_can_attack_timeout():
 #	EventBus.canAttack.emit(zombie_damage)
+
+#
+#func _on_explosion_area_body_entered(body):
+#    if "Player" in body.name:
+#        var direction = global_position.direction_to(body.global_position)
+#        var explosion_force = direction * knockback_strength
+#        body.knockback = explosion_force
+
+#
+#func _physics_process(delta):
+#    var direction = GetAxis()
+#    velocity = direction * speed + knockback
+#    look_at(get_global_mouse_position())
+#    move_and_slide()
+#    knockback = lerp(knockback, Vector2.ZERO, 0.1)
+

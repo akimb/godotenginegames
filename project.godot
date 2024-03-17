@@ -13,7 +13,7 @@ config_version=5
 config/name="gamejamalpha"
 run/main_scene="res://title_screen.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
-config/icon="res://gameicon.png"
+config/icon="res://MC_icon.png"
 
 [autoload]
 

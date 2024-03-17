@@ -50,6 +50,7 @@ var maxHealth = health
 var fireDelay := normalFireDelay
 var canTakeDamage := true
 var damageTaken := 0
+var bossBulletDamage := 0
 var isRapidFire := false
 var isDoubleDamage := false
 #--------------------------------------------------------------------------------------------------
@@ -61,7 +62,9 @@ func _ready():
 	playerui.set_health(health)
 	EventBus.goofymode.connect(goofyEnabled)
 	EventBus.playerDamage.connect(changeDamage)
+	EventBus.currentScore.connect(storeScore)
 	damageTaken = EventBus.enemyAttack.connect(attack)
+	bossBulletDamage = EventBus.bossBullet.connect(attack)
 	
 func _process(_delta):
 	if Input.is_action_pressed("shoot") and fireDelayTimer.is_stopped():
@@ -88,7 +91,7 @@ func shoot():
 	get_tree().root.add_child(b)
 	b.transform = $Muzzle.global_transform
 	if isRapidFire:
-			EventBus.rapidfire.emit(self.isRapidFire)
+		EventBus.rapidfire.emit(self.isRapidFire)
 	elif isDoubleDamage:
 		EventBus.doubledamage.emit(self.isDoubleDamage)
 	else:
@@ -103,6 +106,11 @@ func dash():
 	#using timer, teleport player a set distance 
 	
 func _on_hitbox_area_entered(area):
+	if area.is_in_group("bossbullet"):
+		health -= 1
+		sprite_flash()
+		lose_health()
+		
 	if area.is_in_group("basic"):
 		health -= damageTaken
 		sprite_flash()
@@ -205,6 +213,7 @@ func lose_health():
 		playerdeath.play()
 		get_tree().root.add_child(deathscreen.instantiate())
 		end_player()
+		EventBus.setDeathScore.emit(score)
 		reset_score()
 
 func goofyEnabled(isGoofy):
@@ -220,3 +229,6 @@ func sprite_flash() -> void:
 	charactersprite.modulate = Color.RED
 	await get_tree().create_timer(0.08).timeout
 	charactersprite.modulate = Color.WHITE
+
+func storeScore(value):
+	score = value

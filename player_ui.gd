@@ -15,7 +15,7 @@ var curr_score : int = 0
 var num
 
 func _ready():
-	num = EventBus.enemy_died.connect(_on_enemy_died)
+	EventBus.enemy_died.connect(_on_enemy_died)
 	EventBus.levelUp.connect(_on_level_up)
 	EventBus.bossLevel.connect(_show_boss_warning)
 
@@ -28,6 +28,7 @@ func set_score(value: int):
 func _on_enemy_died(value):
 	curr_score += value
 	set_score(curr_score)
+	EventBus.currentScore.emit(curr_score)
 
 func _on_level_up():
 	leveluptimer.start()

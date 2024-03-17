@@ -14,6 +14,7 @@ class_name WorldManager
 #------------------------------------------------------------------------------s--------------------
 @onready var parasitelooped = $Sounds/parasitelooped
 @onready var goofyahhhbeat = $Sounds/goofyahhhbeat
+@onready var parasitebuild = $Sounds/parasitebuild
 @onready var bossroar = $Sounds/bossroar
 @onready var player = $Player
 @onready var tilemap = $TileMap
@@ -25,6 +26,7 @@ var rect_max = Vector2(75, 63)
 var valid_cells
 var max_difficulty_time = 0.24
 var isGoofy := false
+var moreBosses := 1
 #--------------------------------------------------------------------------------------------------
 
 func _ready():
@@ -33,27 +35,18 @@ func _ready():
 #	get_valid_cells()
 	
 func _process(_delta):
-#	if Input.is_action_pressed("goofy") or isGoofy == true:
-#		isGoofy = true
-#		EventBus.goofymode.emit(self.isGoofy)
-#		parasitelooped.play()
-#
-#	if Input.is_action_pressed("regular") or isGoofy == false:
-#		isGoofy = false
-#		EventBus.goofymode.emit(self.isGoofy)
-#		goofyahhhbeat.play()
+	EventBus.goofymode.emit(self.isGoofy)
 	pass
 
 func _input(_event):
-	if Input.is_action_pressed("goofy"):
+	if Input.is_action_just_pressed("goofy"):
 		isGoofy = true
-		EventBus.goofymode.emit(self.isGoofy)
 		goofyahhhbeat.play()
 		parasitelooped.stop()
+		parasitebuild.stop()
 		
-	if Input.is_action_pressed("regular"):
+	if Input.is_action_just_pressed("regular"):
 		isGoofy = false
-		EventBus.goofymode.emit(self.isGoofy)
 		parasitelooped.play()
 		goofyahhhbeat.stop()
 

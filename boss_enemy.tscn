@@ -38,6 +38,11 @@ script = ExtResource("1_gdytu")
 speed = 150
 health = 100
 zombie_damage = 5
+isBoss = true
+
+[node name="Muzzle" type="Marker2D" parent="."]
+position = Vector2(-4, 0)
+rotation = 3.14159
 
 [node name="Enemy Sprite" type="Sprite2D" parent="."]
 position = Vector2(0, -18)
@@ -120,5 +125,9 @@ script = ExtResource("5_jgvos")
 wait_time = 0.5
 autostart = true
 
+[node name="BossBulletShoot" type="Timer" parent="."]
+autostart = true
+
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered" flags=18]
 [connection signal="timeout" from="NavTimer" to="." method="_on_nav_timer_timeout" flags=18]
+[connection signal="timeout" from="BossBulletShoot" to="." method="_on_boss_bullet_shoot_timeout"]

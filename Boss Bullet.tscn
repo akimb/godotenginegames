@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3 uid="uid://is527jwlpgub"]
+
+[ext_resource type="Script" path="res://bossbullet.gd" id="1_147a2"]
+[ext_resource type="Texture2D" uid="uid://b2oamawh5a0cl" path="res://bossbullet.png" id="2_c3u03"]
+[ext_resource type="Texture2D" uid="uid://ciliwejf67ehf" path="res://2d_lights_and_shadows_neutral_point_light.webp" id="3_nk6tu"]
+[ext_resource type="Texture2D" uid="uid://cfjfebuw62yp8" path="res://bossbulletparticle.png" id="4_1phde"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xqlma"]
+radius = 15.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tgvof"]
+emission_shape = 1
+emission_sphere_radius = 30.0
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+
+[node name="Boss Bullet" type="Area2D" groups=["bossbullet"]]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_147a2")
+
+[node name="BulletDeathTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="Bullet Sprite" type="Sprite2D" parent="."]
+rotation = 1.5708
+texture = ExtResource("2_c3u03")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["bossbullet"]]
+rotation = 1.5708
+shape = SubResource("CircleShape2D_xqlma")
+debug_color = Color(0.968627, 0, 0.470588, 0.419608)
+
+[node name="Bullet Light" type="PointLight2D" parent="."]
+position = Vector2(-1, 3.9293e-12)
+rotation = 3.14159
+scale = Vector2(0.239998, 0.239998)
+color = Color(0.0470588, 0.756863, 0.890196, 1)
+energy = 6.0
+texture = ExtResource("3_nk6tu")
+
+[node name="Bullet Particles" type="GPUParticles2D" parent="."]
+amount = 5
+process_material = SubResource("ParticleProcessMaterial_tgvof")
+texture = ExtResource("4_1phde")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="BulletDeathTimer" to="." method="_on_bullet_death_timer_timeout" flags=18]

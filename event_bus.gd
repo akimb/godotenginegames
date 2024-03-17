@@ -11,6 +11,10 @@ signal enemyAttack(enemy)
 signal levelUp
 signal playerDamage
 signal bossLevel
+signal bossBullet
+signal playerPosition
+signal setDeathScore
+signal currentScore
 
 var score : int = 0
 #var playerDamage : int = 1
